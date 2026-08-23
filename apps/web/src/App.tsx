@@ -1,100 +1,69 @@
 import React, { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
-import { GoldQuoter } from './components/BuyTerminal/GoldQuoter';
-import { CheckoutModal } from './components/BuyTerminal/CheckoutModal';
-import { OrderSuccessModal } from './components/BuyTerminal/OrderSuccessModal';
-import { VideoReelsGrid } from './components/VideoShowcase/VideoReelsGrid';
-import { PorLiveDashboard } from './components/ProofOfReserve/PorLiveDashboard';
-import { CerCardViewer } from './components/CerCertificate/CerCardViewer';
-import { VaultStacker } from './components/PhysicalStacking/VaultStacker';
+import { SystemsGrid } from './components/SystemsGrid';
+import { ReserveSection } from './components/ReserveSection';
+import { VaultSection } from './components/VaultSection';
+import { VerifyConsole } from './components/VerifyConsole';
+import { RailSection } from './components/RailSection';
+import { NetworkStatus } from './components/NetworkStatus';
+import { AccessModal } from './components/AccessModal';
 import { Footer } from './components/Footer';
 
 export function App() {
-  const [walletAddress, setWalletAddress] = useState<string>('rCustomerTestAccount1234567890');
-  const [activeQuoteForCheckout, setActiveQuoteForCheckout] = useState<any | null>(null);
-  const [settledOrderResult, setSettledOrderResult] = useState<any | null>(null);
+  const [accessModalOpen, setAccessModalOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('infrastructure');
 
-  const handleConnectWallet = () => {
-    const mockWallets = [
-      'rJLMSTy77hTxqgDw9WMxCnYC8m5vhqN3FQ',
-      'rNX4faQ35SdtE4rDoEg8YeVLQKQ57AYyCt',
-      'rCustomerTestAccount1234567890',
-    ];
-    const nextWallet = mockWallets[Math.floor(Math.random() * mockWallets.length)];
-    setWalletAddress(nextWallet);
-  };
-
-  const scrollToQuoter = () => {
-    const el = document.getElementById('quoter');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const scrollToReserves = () => {
-    const el = document.getElementById('reserves');
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-obsidian-950 text-slate-100 selection:bg-gold-500 selection:text-black">
-      {/* Navigation */}
+    <div className="min-h-screen bg-[#070709] text-zinc-100 selection:bg-rose-600 selection:text-white font-sans antialiased">
+      {/* Institutional Top Navbar */}
       <Navbar
-        onOpenQuoter={scrollToQuoter}
-        walletAddress={walletAddress}
-        onConnectWallet={handleConnectWallet}
+        onOpenAccess={() => setAccessModalOpen(true)}
+        activeSection={activeSection}
       />
 
-      {/* Main Content */}
+      {/* Main Content Sections */}
       <main>
-        {/* Hero Section */}
+        {/* Salvador Dali Liquid-Metal Hero */}
         <HeroSection
-          onStartBuying={scrollToQuoter}
-          onExplorePoR={scrollToReserves}
+          onEnterNetwork={() => setAccessModalOpen(true)}
+          onViewInfrastructure={() => scrollToSection('infrastructure')}
         />
 
-        {/* Live Quoter & Purchase Terminal */}
-        <GoldQuoter
-          onProceedToCheckout={(quote) => setActiveQuoteForCheckout(quote)}
-          userXrplAddress={walletAddress}
+        {/* 4 Systems Editorial Grid (Reserve, Vault, Rail, Verify) */}
+        <SystemsGrid
+          onSelectSystem={(sysId) => scrollToSection(sysId)}
         />
 
-        {/* Video Showcase Grid (Featuring Downloads Media) */}
-        <VideoReelsGrid />
+        {/* UNYKORN Reserve: RWA & APMEX Wholesale Framework */}
+        <ReserveSection />
 
-        {/* Live Proof-of-Reserve Invariant Dashboard */}
-        <PorLiveDashboard />
+        {/* UNYKORN Vaults: ERC-6551 & Genesis Certificates */}
+        <VaultSection />
 
-        {/* Controllable Electronic Record (CER) Certificate Viewer */}
-        <CerCardViewer
-          ownerAddress={walletAddress}
-          weightMg={settledOrderResult?.allocatedWeightMg || 1160.90}
-        />
+        {/* UNYKORN Verify: Interactive Cryptographic Attestation Console */}
+        <VerifyConsole />
 
-        {/* Physical Stacking & Vault Courier Delivery Progress */}
-        <VaultStacker />
+        {/* UNYKORN Rail: Settlement & Multi-Sig Custody */}
+        <RailSection />
+
+        {/* UNYKORN Network: Live System & Node Telemetry */}
+        <NetworkStatus />
       </main>
 
-      {/* Footer */}
+      {/* Institutional Fiduciary Footer */}
       <Footer />
 
-      {/* Modals */}
-      {activeQuoteForCheckout && (
-        <CheckoutModal
-          quote={activeQuoteForCheckout}
-          onClose={() => setActiveQuoteForCheckout(null)}
-          onPaymentSettled={(orderResult) => {
-            setActiveQuoteForCheckout(null);
-            setSettledOrderResult(orderResult);
-          }}
-          userXrplAddress={walletAddress}
-        />
-      )}
-
-      {settledOrderResult && (
-        <OrderSuccessModal
-          orderResult={settledOrderResult}
-          onClose={() => setSettledOrderResult(null)}
-        />
+      {/* Access Gateway Modal */}
+      {accessModalOpen && (
+        <AccessModal onClose={() => setAccessModalOpen(false)} />
       )}
     </div>
   );
