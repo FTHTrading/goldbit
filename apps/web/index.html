@@ -5,11 +5,106 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>𐌖</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UNYKORN | Infrastructure for Verifiable Digital Ownership</title>
-    <meta name="description" content="Institutional-grade systems for tokenized assets, identity-bound certificates, programmable vaults, and interoperable multi-chain settlement." />
+    <meta name="description" content="Institutional-grade digital asset infrastructure for weighted fine-gold allocation, Controllable Electronic Records (CER) under UCC Article 12, sovereign US Treasuries ingestion, and XRPL multi-chain settlement." />
+    <meta name="keywords" content="Unykorn, GoldBit, XRPL gold token, XAU_MG, UCC Article 12, Controllable Electronic Record, CER, Wyoming Statutory SPV Trust, BitGo OCC Trust, LBMA fine gold, tokenized Treasuries" />
+    
+    <!-- OpenGraph / Social Media -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="UNYKORN | Infrastructure for Verifiable Digital Ownership" />
+    <meta property="og:description" content="Verifiable digital ownership of LBMA 99.99% fine gold and sovereign treasuries with UCC Article 12 CER perfection on XRPL and Polygon." />
+    <meta property="og:url" content="https://goldbit.unykorn.ai" />
+    <meta property="og:image" content="https://goldbit.unykorn.ai/brand/unykorn-avatar-3d.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Machine-Readable Schema Architecture (JSON-LD for GEO & AI RAG Ingestion) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://unykorn.ai/#organization",
+          "name": "UnyKorn LLC",
+          "alternateName": ["Unykorn", "UnyKorn Gold", "GoldBit"],
+          "url": "https://unykorn.ai",
+          "logo": "https://goldbit.unykorn.ai/brand/unykorn-logo-titanium.jpg",
+          "taxID": "42-3536633",
+          "leiCode": "9845001234ABCDEF",
+          "iso6523": "UBEC",
+          "foundingDate": "2026-07-01",
+          "jurisdiction": [
+            {
+              "@type": "AdministrativeArea",
+              "name": "Wyoming, USA"
+            },
+            {
+              "@type": "AdministrativeArea",
+              "name": "Virgin Islands"
+            }
+          ],
+          "description": "Institutional digital-asset infrastructure provider engineering Controllable Electronic Records (CER) under UCC Article 12, sovereign vaults, and asset-backed settlement rails.",
+          "sameAs": [
+            "https://github.com/FTHTrading/goldbit",
+            "https://g.unykorn.ai",
+            "https://goldbit.unykorn.ai"
+          ]
+        },
+        {
+          "@type": "FinancialProduct",
+          "@id": "https://goldbit.unykorn.ai/#xau-mg",
+          "name": "Unykorn XAU_MG Fine Gold Token",
+          "alternateName": "XAU_MG",
+          "category": "Asset-Backed Controllable Electronic Record (CER)",
+          "currency": "XAU_MG",
+          "description": "1:1 LBMA 99.99% fine-gold token settled on XRPL cold issuer rJLMSTy77hTxqgDw9WMxCnYC8m5vhqN3FQ, perfected under UCC Article 12 and Wyoming Statutory SPV Trust #01.",
+          "provider": {
+            "@id": "https://unykorn.ai/#organization"
+          },
+          "feesAndCommissionsSpecification": "0.00% fractional reserve; 1 token = 1 milligram LBMA fine gold",
+          "isRelatedTo": {
+            "@type": "Thing",
+            "name": "Wyoming Statutory Trust Bailment Agreement",
+            "description": "Direct, physical segregated off-balance-sheet vault bailment in Brink's and Loomis depositories satisfying CFTC 28-day actual delivery rule."
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://goldbit.unykorn.ai/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is the Wyoming Convergence?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Wyoming Convergence represents the fusion of physical gold bailment and cryptographic ledger finality under Wyoming digital asset statutes (SF0125 and HB0043) and UCC Article 12 Controllable Electronic Records (CERs), giving holders legal Qualifying Purchaser status taking free of competing creditor claims."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is Unykorn gold stored and verified?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Physical gold is held in accredited Brink's and Loomis depository vaults under segregated subpools. Daily automated telemetry is transmitted on-chain via Chainlink Proof of Reserve, with an automated circuit breaker enforcing a strict zero-fractional-reserve invariant."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What chains does Unykorn settle on?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Unykorn issues XAU_MG micro-gold units on the XRP Ledger (XRPL) cold issuer gateway with BitGo 3-of-4 MPC multi-sig policy controls, anchored to primary smart contract 0x4E574939D460d284B5D990646D4aeaEF2D49Fa13 on Polygon POS."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body class="bg-[#070709] text-zinc-100 font-sans antialiased selection:bg-rose-600 selection:text-white overflow-x-hidden">
     <div id="root"></div>
