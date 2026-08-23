@@ -10,6 +10,8 @@ import { VaultStacker } from './components/PhysicalStacking/VaultStacker';
 import { PorLiveDashboard } from './components/ProofOfReserve/PorLiveDashboard';
 import { VideoReelsGrid } from './components/VideoShowcase/VideoReelsGrid';
 import { UnykornClubBlueprint } from './components/UnykornClubBlueprint';
+import { LegalBlogSection } from './components/LegalBlogSection';
+import { FraudVerificationSection } from './components/FraudVerificationSection';
 import { ReserveSection } from './components/ReserveSection';
 import { VaultSection } from './components/VaultSection';
 import { VerifyConsole } from './components/VerifyConsole';
@@ -146,6 +148,12 @@ export function App() {
 
             {/* SECTION: Unykorn Club Architecture & 6-Stream Monetization Blueprint */}
             <UnykornClubBlueprint />
+
+            {/* SECTION: Wyoming Bailment Legal Research & Podcast Dispatch */}
+            <LegalBlogSection />
+
+            {/* SECTION: BlockchainFraud.org Audit & Free $30 Client Pass Portal */}
+            <FraudVerificationSection />
 
             {/* SECTION: 3D Holographic CER Deed Certificate Viewer */}
             <section>

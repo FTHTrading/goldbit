@@ -22,6 +22,7 @@ import {
   Sparkles
 } from 'lucide-react';
 import { formatUSD } from '../utils/formatters';
+import { FraudVerificationSection } from '../components/FraudVerificationSection';
 
 interface GoldReserveStoryProps {
   onOpenAccess: () => void;
@@ -695,6 +696,9 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
             </button>
           </div>
         </section>
+
+        {/* Third-Party Due Diligence & Free $30 Client Pass */}
+        <FraudVerificationSection />
 
         {/* Important Fiduciary Notice */}
         <footer className="pt-12 border-t border-white/[0.08] text-xs font-mono text-zinc-400 leading-relaxed space-y-3">
