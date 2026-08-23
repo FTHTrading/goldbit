@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { SystemsGrid } from './components/SystemsGrid';
+import { GoldQuoter } from './components/BuyTerminal/GoldQuoter';
+import { CheckoutModal } from './components/BuyTerminal/CheckoutModal';
+import { OrderSuccessModal } from './components/BuyTerminal/OrderSuccessModal';
+import { CerCardViewer } from './components/CerCertificate/CerCardViewer';
+import { VaultStacker } from './components/PhysicalStacking/VaultStacker';
+import { PorLiveDashboard } from './components/ProofOfReserve/PorLiveDashboard';
+import { VideoReelsGrid } from './components/VideoShowcase/VideoReelsGrid';
 import { ReserveSection } from './components/ReserveSection';
 import { VaultSection } from './components/VaultSection';
 import { VerifyConsole } from './components/VerifyConsole';
@@ -14,18 +21,24 @@ import { GoldReserveStory } from './pages/GoldReserveStory';
 import { Layers, Sparkles } from 'lucide-react';
 
 export function App() {
+  // Navigation & View State
+  const [currentView, setCurrentView] = useState<'platform' | 'gold-reserve'>('platform');
   const [accessModalOpen, setAccessModalOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('infrastructure');
-  
-  // Detect if accessing via g.unykorn.ai subdomain or URL param / route
-  const [currentView, setCurrentView] = useState<'platform' | 'gold-reserve'>('platform');
+
+  // Checkout & Modal States
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [successModalOpen, setSuccessModalOpen] = useState(false);
+  const [selectedQuote, setSelectedQuote] = useState<any>(null);
+  const [completedOrder, setCompletedOrder] = useState<any>(null);
+  const userXrplAddress = 'rCustomerTestAccount1234567890';
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const hostname = window.location.hostname.toLowerCase();
       const pathname = window.location.pathname.toLowerCase();
       const search = window.location.search.toLowerCase();
-      
+
       if (hostname.startsWith('g.') || pathname.includes('/gold') || search.includes('view=gold')) {
         setCurrentView('gold-reserve');
       }
@@ -39,10 +52,21 @@ export function App() {
     }
   };
 
+  const handleProceedToCheckout = (quote: any) => {
+    setSelectedQuote(quote);
+    setCheckoutModalOpen(true);
+  };
+
+  const handlePaymentSettled = (orderResult: any) => {
+    setCompletedOrder(orderResult);
+    setCheckoutModalOpen(false);
+    setSuccessModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-[#070709] text-zinc-100 selection:bg-rose-600 selection:text-white font-sans antialiased">
-      {/* Floating Global Switcher Pill between UNYKORN OS & g.unykorn.ai */}
-      <div className="fixed bottom-6 right-6 z-40 bg-[#0C0C12]/90 backdrop-blur-xl border border-white/[0.12] rounded-full p-1.5 shadow-2xl flex items-center gap-1 text-xs font-mono">
+      {/* Global View Switcher Pill */}
+      <div className="fixed bottom-6 right-6 z-40 bg-[#0C0C12]/95 backdrop-blur-xl border border-white/[0.15] rounded-full p-1.5 shadow-2xl flex items-center gap-1 text-xs font-mono">
         <button
           onClick={() => setCurrentView('platform')}
           className={`px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 ${
@@ -52,7 +76,7 @@ export function App() {
           }`}
         >
           <Layers className="w-3.5 h-3.5" />
-          <span>Institutional OS</span>
+          <span>Full OS & Terminal</span>
         </button>
 
         <button
@@ -75,7 +99,7 @@ export function App() {
           onSwitchToPlatform={() => setCurrentView('platform')}
         />
       ) : (
-        /* Wide UNYKORN Master Institutional Platform */
+        /* Master Interactive UNYKORN Institutional OS & Sales Terminal */
         <>
           {/* Institutional Top Navbar */}
           <Navbar
@@ -83,46 +107,94 @@ export function App() {
             activeSection={activeSection}
           />
 
-          {/* Main Content Sections */}
           <main>
             {/* Salvador Dali Liquid-Metal Hero */}
             <HeroSection
-              onEnterNetwork={() => setAccessModalOpen(true)}
+              onEnterNetwork={() => scrollToSection('terminal')}
               onViewInfrastructure={() => scrollToSection('infrastructure')}
             />
 
-            {/* 4 Systems Editorial Grid (Reserve, Vault, Rail, Verify) */}
+            {/* 4 Systems Editorial Architecture Grid */}
             <SystemsGrid
               onSelectSystem={(sysId) => {
                 if (sysId === 'reserve') {
-                  setCurrentView('gold-reserve');
+                  scrollToSection('terminal');
                 } else {
                   scrollToSection(sysId);
                 }
               }}
             />
 
-            {/* UNYKORN Reserve: RWA & APMEX Wholesale Framework */}
+            {/* SECTION: Live Interactive Gold Quoter Terminal */}
+            <section id="terminal" className="scroll-mt-24">
+              <GoldQuoter
+                onProceedToCheckout={handleProceedToCheckout}
+                userXrplAddress={userXrplAddress}
+              />
+            </section>
+
+            {/* SECTION: 3D Holographic CER Deed Certificate Viewer */}
+            <section>
+              <CerCardViewer
+                ownerAddress={userXrplAddress}
+                weightMg={selectedQuote ? selectedQuote.goldMg : 1160.90}
+              />
+            </section>
+
+            {/* SECTION: Physical Vault Stacking & Armored Courier Progress */}
+            <section>
+              <VaultStacker />
+            </section>
+
+            {/* SECTION: Real-Time Proof-of-Reserve Solvency Gauge */}
+            <section>
+              <PorLiveDashboard />
+            </section>
+
+            {/* SECTION: High-Energy Eccentric Video Reels Grid */}
+            <section>
+              <VideoReelsGrid />
+            </section>
+
+            {/* SECTION: UNYKORN Reserve (APMEX Wholesale & Legal Custody) */}
             <ReserveSection />
 
-            {/* UNYKORN Vaults: ERC-6551 & Genesis Certificates */}
+            {/* SECTION: UNYKORN Vaults (ERC-6551 Smart Accounts) */}
             <VaultSection />
 
-            {/* UNYKORN Verify: Interactive Cryptographic Attestation Console */}
+            {/* SECTION: UNYKORN Verify (Interactive Cryptographic Hash Inspector) */}
             <VerifyConsole />
 
-            {/* UNYKORN Rail: Settlement & Multi-Sig Custody */}
+            {/* SECTION: UNYKORN Rail (XRPL Cold/Hot & BitGo Multi-Sig) */}
             <RailSection />
 
-            {/* UNYKORN 3D Brand & Sovereign Force Showcase */}
+            {/* SECTION: 3D Titanium Brand & Sovereign Energy Force */}
             <BrandShowcase />
 
-            {/* UNYKORN Network: Live System & Node Telemetry */}
+            {/* SECTION: Network Status & Consensus Telemetry */}
             <NetworkStatus />
           </main>
 
           {/* Institutional Fiduciary Footer */}
           <Footer />
+
+          {/* Interactive Checkout Modal (BitGo USDC QR + Sim) */}
+          {checkoutModalOpen && selectedQuote && (
+            <CheckoutModal
+              quote={selectedQuote}
+              onClose={() => setCheckoutModalOpen(false)}
+              onPaymentSettled={handlePaymentSettled}
+              userXrplAddress={userXrplAddress}
+            />
+          )}
+
+          {/* Order Success Holographic Receipt Modal with Confetti */}
+          {successModalOpen && completedOrder && (
+            <OrderSuccessModal
+              orderResult={completedOrder}
+              onClose={() => setSuccessModalOpen(false)}
+            />
+          )}
         </>
       )}
 
