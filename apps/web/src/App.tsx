@@ -9,6 +9,7 @@ import { CerCardViewer } from './components/CerCertificate/CerCardViewer';
 import { VaultStacker } from './components/PhysicalStacking/VaultStacker';
 import { PorLiveDashboard } from './components/ProofOfReserve/PorLiveDashboard';
 import { VideoReelsGrid } from './components/VideoShowcase/VideoReelsGrid';
+import { UnykornClubBlueprint } from './components/UnykornClubBlueprint';
 import { ReserveSection } from './components/ReserveSection';
 import { VaultSection } from './components/VaultSection';
 import { VerifyConsole } from './components/VerifyConsole';
@@ -142,6 +143,9 @@ export function App() {
               onOpenTerminal={() => scrollToSection('terminal')}
               onOpenCinematic={() => setCurrentView('gold-reserve')}
             />
+
+            {/* SECTION: Unykorn Club Architecture & 6-Stream Monetization Blueprint */}
+            <UnykornClubBlueprint />
 
             {/* SECTION: 3D Holographic CER Deed Certificate Viewer */}
             <section>

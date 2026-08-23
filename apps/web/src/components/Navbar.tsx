@@ -12,12 +12,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
   const navLinks = [
     { label: 'Terminal', href: '#terminal' },
     { label: 'Audio Doc', href: '#audio-doc' },
+    { label: 'Blueprint', href: '#unykorn-club' },
     { label: 'Vaults', href: '#vaults' },
     { label: 'Reserve', href: '#reserve' },
     { label: 'Verify', href: '#verify' },
     { label: 'Rail', href: '#rail' },
     { label: 'Identity', href: '#identity' },
-    { label: 'Network', href: '#network' },
   ];
 
   return (
@@ -46,7 +46,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
             </div>
           </a>
 
-          {/* Center Quiet Navigation */}
+          {/* Center Navigation */}
           <div className="hidden md:flex items-center gap-6 text-xs font-medium tracking-wider text-zinc-400 uppercase">
             {navLinks.map((item) => (
               <a
