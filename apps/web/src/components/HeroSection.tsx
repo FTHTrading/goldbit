@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, Terminal, Layers, ShieldCheck, Activity, Key } from 'lucide-react';
+import { ArrowRight, Terminal, Layers, ShieldCheck, Activity, Key, Globe, Shield } from 'lucide-react';
 
 interface HeroSectionProps {
   onEnterNetwork: () => void;
@@ -11,7 +11,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   onViewInfrastructure,
 }) => {
   return (
-    <div className="relative overflow-hidden pt-16 pb-28 lg:pt-28 lg:pb-36">
+    <div className="relative overflow-hidden pt-16 pb-28 lg:pt-24 lg:pb-36">
       {/* Background Liquid Metal Video Canvas */}
       <div className="absolute inset-0 z-0 opacity-40 overflow-hidden pointer-events-none">
         <video
@@ -29,13 +29,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       </div>
 
       {/* Crimson Ambient Glow Core */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-rose-600/10 blur-[150px] pointer-events-none"></div>
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[380px] bg-rose-600/10 blur-[160px] pointer-events-none"></div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        {/* Subtle Brand Tag */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-zinc-300 text-xs font-mono tracking-widest uppercase mb-10">
-          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
-          UNYKORN PROTOCOL SPECIFICATION v2.4
+        {/* Subtle Sovereign Badges */}
+        <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.1] text-zinc-300 text-xs font-mono tracking-widest uppercase">
+            <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-ping"></span>
+            UNYKORN PROTOCOL SPECIFICATION v2.4
+          </div>
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono tracking-wider">
+            <Globe className="w-3.5 h-3.5" />
+            DUAL CHARTER: VIRGIN ISLANDS & WYOMING
+          </div>
         </div>
 
         {/* Master Heading */}
@@ -50,7 +56,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
         </p>
 
         {/* Primary Action Row */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-20">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
           <button
             onClick={onEnterNetwork}
             className="w-full sm:w-auto px-8 py-4 rounded-xl bg-white text-black font-bold text-sm uppercase tracking-wider flex items-center justify-center gap-2.5 hover:bg-zinc-200 transition-all shadow-xl hover:shadow-rose-500/10"

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, ExternalLink } from 'lucide-react';
+import { Shield, ExternalLink, Globe } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -8,13 +8,21 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
           {/* Brand Col */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-3 mb-4">
+              <img
+                src="/brand/unykorn-logo-titanium.jpg"
+                alt="UnyKorn Logo"
+                className="w-7 h-7 rounded-lg object-cover border border-white/20"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                }}
+              />
               <span className="font-extrabold text-xl text-white tracking-[0.2em]">
                 UNYKORN
               </span>
             </div>
             <p className="text-zinc-400 text-xs leading-relaxed max-w-md font-sans">
-              UNYKORN LLC is an institutional digital-asset infrastructure provider engineering verifiable digital ownership, programmable smart-account vaults, and asset-backed settlement rails under UCC Article 12 statutory perfection.
+              UnyKorn LLC is an institutional digital-asset infrastructure provider operating under dual charters in the Virgin Islands and Wyoming, engineering verifiable digital ownership, programmable smart-account vaults, and asset-backed settlement rails under UCC Article 12 statutory perfection.
             </p>
           </div>
 
@@ -28,17 +36,18 @@ export const Footer: React.FC = () => {
               <li><a href="#vaults" className="hover:text-white transition-colors">UNYKORN Vault (ERC-6551)</a></li>
               <li><a href="#rail" className="hover:text-white transition-colors">UNYKORN Rail (XRPL/EVM)</a></li>
               <li><a href="#verify" className="hover:text-white transition-colors">UNYKORN Verify</a></li>
-              <li><a href="#network" className="hover:text-white transition-colors">UNYKORN Network Status</a></li>
+              <li><a href="#identity" className="hover:text-white transition-colors">3D Brand & Energy Grid</a></li>
+              <li><a href="#network" className="hover:text-white transition-colors">Network Telemetry</a></li>
             </ul>
           </div>
 
-          {/* Legal & Standards */}
+          {/* Legal & Dual Charter */}
           <div>
             <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-4 font-mono">
-              Entity & Disclosures
+              Charters & Standards
             </h4>
             <ul className="space-y-2 text-xs text-zinc-400 font-mono text-[11px]">
-              <li>Entity: UnyKorn LLC (Wyoming, USA)</li>
+              <li>Dual Charter: Virgin Islands & Wyoming, USA</li>
               <li>Filing: July 1, 2026 • EIN: 42-3536633</li>
               <li>GLEIF LEI: 9845001234ABCDEF</li>
               <li>ISO MIC: UBEC</li>
@@ -53,9 +62,9 @@ export const Footer: React.FC = () => {
             © {new Date().getFullYear()} UnyKorn LLC. All rights reserved.
           </div>
           <div className="flex items-center gap-6 text-[11px]">
-            <span>UCC Article 12 CER Standard</span>
+            <span>Virgin Islands SPV</span>
+            <span>Wyoming UCC Article 12 CER</span>
             <span>LBMA 99.99% Assay Benchmark</span>
-            <span>Non-Custodial Architecture</span>
           </div>
         </div>
       </div>

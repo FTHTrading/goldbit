@@ -15,6 +15,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
     { label: 'Reserve', href: '#reserve' },
     { label: 'Verify', href: '#verify' },
     { label: 'Rail', href: '#rail' },
+    { label: 'Identity', href: '#identity' },
     { label: 'Network', href: '#network' },
   ];
 
@@ -22,27 +23,30 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
     <nav className="sticky top-0 z-50 bg-[#070709]/90 backdrop-blur-xl border-b border-white/[0.07]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          {/* Master Brand */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-white/90 via-zinc-400 to-rose-600 p-[1px] shadow-sm">
-              <div className="w-full h-full bg-[#070709] rounded-[7px] flex items-center justify-center">
-                <span className="font-mono font-black text-sm text-white group-hover:text-rose-400 transition-colors">
-                  𐌖
-                </span>
-              </div>
+          {/* Master Brand with Real Gunmetal Titanium UnyKorn Mark */}
+          <a href="#" className="flex items-center gap-3.5 group">
+            <div className="w-10 h-10 rounded-xl overflow-hidden border border-white/20 group-hover:border-rose-500/50 transition-colors shadow-lg bg-[#070709] p-0.5">
+              <img
+                src="/brand/unykorn-logo-titanium.jpg"
+                alt="UnyKorn Official Sovereign Mark"
+                className="w-full h-full object-cover rounded-[9px] group-hover:scale-105 transition-transform"
+                onError={(e) => {
+                  (e.target as HTMLElement).style.display = 'none';
+                }}
+              />
             </div>
             <div className="flex flex-col">
               <span className="font-extrabold text-xl tracking-[0.2em] text-white">
                 UNYKORN
               </span>
               <span className="text-[9px] font-mono tracking-widest text-zinc-400 uppercase -mt-0.5">
-                Institutional OS
+                Institutional OS • VI & WY
               </span>
             </div>
           </a>
 
           {/* Center Quiet Navigation */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-medium tracking-wider text-zinc-400 uppercase">
+          <div className="hidden md:flex items-center gap-7 text-xs font-medium tracking-wider text-zinc-400 uppercase">
             {navLinks.map((item) => (
               <a
                 key={item.label}
@@ -58,7 +62,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
           <div className="hidden lg:flex items-center gap-4">
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/[0.08] font-mono text-[11px] text-zinc-400">
               <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-              <span>MAINNET • OPERATIONAL</span>
+              <span>DUAL CHARTER • VI / WY</span>
             </div>
 
             <button

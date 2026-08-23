@@ -6,6 +6,7 @@ import { ReserveSection } from './components/ReserveSection';
 import { VaultSection } from './components/VaultSection';
 import { VerifyConsole } from './components/VerifyConsole';
 import { RailSection } from './components/RailSection';
+import { BrandShowcase } from './components/BrandShowcase';
 import { NetworkStatus } from './components/NetworkStatus';
 import { AccessModal } from './components/AccessModal';
 import { Footer } from './components/Footer';
@@ -53,6 +54,9 @@ export function App() {
 
         {/* UNYKORN Rail: Settlement & Multi-Sig Custody */}
         <RailSection />
+
+        {/* UNYKORN 3D Brand & Sovereign Energy Grid Showcase */}
+        <BrandShowcase />
 
         {/* UNYKORN Network: Live System & Node Telemetry */}
         <NetworkStatus />
