@@ -17,7 +17,9 @@ import {
   Key,
   Globe,
   Sliders,
-  ExternalLink
+  ExternalLink,
+  Radio,
+  Sparkles
 } from 'lucide-react';
 import { formatUSD } from '../utils/formatters';
 
@@ -31,10 +33,16 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
   onSwitchToPlatform,
 }) => {
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [audioProgress, setAudioProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(65);
   const [activeVoiceStep, setActiveVoiceStep] = useState(0);
+  const [isMuted, setIsMuted] = useState(false);
   const [goldWeightGrams, setGoldWeightGrams] = useState(1000); // 1kg default
   const [ltvPercent, setLtvPercent] = useState(45); // 45% conservative LTV
   const [selectedDoc, setSelectedDoc] = useState(0);
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const spotGoldPerGram = 82.50; // $82.50/g ($2,566/oz)
   const collateralValue = goldWeightGrams * spotGoldPerGram;
@@ -43,58 +51,73 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
   const liquidationBuffer = 80;
 
   const scriptLines = [
-    "This is gold ownership—reengineered for the digital era.",
-    "You acquire a verified, weighted allocation of physical gold from an approved vault program.",
-    "Every allocation is documented: weight, purity, custody, title records, and supporting papers—organized into one verifiable ownership package.",
-    "UNYKORN then creates a secure digital representation of those documented asset rights. The physical metal does not need to move. It remains protected in custody while its verified record is anchored to the UNYKORN charter ledger.",
-    "Your ownership stays clear. Your documentation stays connected. Your asset remains visible, verifiable, and ready when you need it.",
-    "For qualified participants, verified holdings may support carefully managed liquidity or collateral programs through approved custody and financing pathways.",
-    "Your position is monitored against defined collateral limits. As value changes, your dashboard shows the asset weight, verified records, available liquidity, and risk controls in real time.",
-    "Gold stays allocated. Ownership stays documented. Liquidity becomes more accessible—under disciplined controls.",
-    "UNYKORN Gold Reserve. Own the weight. Verify the record. Build with control."
+    { start: 0, text: "This is gold ownership—reengineered for the digital era." },
+    { start: 5, text: "You acquire a verified, weighted allocation of physical gold from an approved vault program." },
+    { start: 12, text: "Every allocation is documented: weight, purity, custody, title records, and supporting papers—organized into one verifiable ownership package." },
+    { start: 22, text: "UNYKORN then creates a secure digital representation of those documented asset rights. The physical metal does not need to move. It remains protected in custody while its verified record is anchored to the UNYKORN charter ledger." },
+    { start: 35, text: "Your ownership stays clear. Your documentation stays connected. Your asset remains visible, verifiable, and ready when you need it." },
+    { start: 43, text: "For qualified participants, verified holdings may support carefully managed liquidity or collateral programs through approved custody and financing pathways." },
+    { start: 53, text: "Your position is monitored against defined collateral limits. As value changes, your dashboard shows the asset weight, verified records, available liquidity, and risk controls in real time." },
+    { start: 63, text: "Gold stays allocated. Ownership stays documented. Liquidity becomes more accessible—under disciplined controls." },
+    { start: 70, text: "UNYKORN Gold Reserve. Own the weight. Verify the record. Build with control." }
   ];
 
-  // Web Speech API Narrator
-  const synthRef = useRef<SpeechSynthesis | null>(null);
-
   useEffect(() => {
-    if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-      synthRef.current = window.speechSynthesis;
-    }
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleTimeUpdate = () => {
+      setCurrentTime(audio.currentTime);
+      setAudioProgress((audio.currentTime / (audio.duration || 1)) * 100);
+
+      // Highlight corresponding subtitle
+      const cur = audio.currentTime;
+      for (let i = scriptLines.length - 1; i >= 0; i--) {
+        if (cur >= scriptLines[i].start) {
+          setActiveVoiceStep(i);
+          break;
+        }
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      if (audio.duration) setDuration(audio.duration);
+    };
+
+    const handleEnded = () => {
+      setIsPlayingAudio(false);
+      setAudioProgress(0);
+      setActiveVoiceStep(0);
+    };
+
+    audio.addEventListener('timeupdate', handleTimeUpdate);
+    audio.addEventListener('loadedmetadata', handleLoadedMetadata);
+    audio.addEventListener('ended', handleEnded);
+
+    return () => {
+      audio.removeEventListener('timeupdate', handleTimeUpdate);
+      audio.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      audio.removeEventListener('ended', handleEnded);
+    };
   }, []);
 
-  const toggleNarrator = () => {
-    if (!synthRef.current) return;
-
+  const toggleAudio = () => {
+    if (!audioRef.current) return;
     if (isPlayingAudio) {
-      synthRef.current.cancel();
+      audioRef.current.pause();
       setIsPlayingAudio(false);
     } else {
-      synthRef.current.cancel();
-      const fullText = scriptLines.join(" ");
-      const utterance = new SpeechSynthesisUtterance(fullText);
-      utterance.rate = 0.88; // Slow, confident pace
-      utterance.pitch = 0.92; // Low-register smooth tone
-      
-      utterance.onboundary = (e) => {
-        const charIdx = e.charIndex;
-        let cumulative = 0;
-        for (let i = 0; i < scriptLines.length; i++) {
-          cumulative += scriptLines[i].length + 1;
-          if (charIdx < cumulative) {
-            setActiveVoiceStep(i);
-            break;
-          }
-        }
-      };
-
-      utterance.onend = () => {
-        setIsPlayingAudio(false);
-      };
-
-      synthRef.current.speak(utterance);
+      audioRef.current.play().catch(e => console.log('Audio playback error:', e));
       setIsPlayingAudio(true);
     }
+  };
+
+  const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!audioRef.current) return;
+    const targetPercent = Number(e.target.value);
+    const targetTime = ((audioRef.current.duration || duration) * targetPercent) / 100;
+    audioRef.current.currentTime = targetTime;
+    setAudioProgress(targetPercent);
   };
 
   const documentBundle = [
@@ -144,6 +167,14 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
 
   return (
     <div className="min-h-screen bg-[#070709] text-zinc-100 font-sans antialiased selection:bg-amber-500 selection:text-black">
+      {/* Hidden Studio Audio Player */}
+      <audio
+        ref={audioRef}
+        src="/media/unykorn-voiceover.mp3"
+        preload="auto"
+        muted={isMuted}
+      />
+
       {/* Top Banner Navigation */}
       <header className="sticky top-0 z-50 bg-[#070709]/90 backdrop-blur-xl border-b border-white/[0.08]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
@@ -228,7 +259,7 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
           </p>
 
           {/* Action CTAs */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
             <a
               href="#cycle"
               className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-amber-200 via-amber-400 to-amber-500 text-black font-extrabold text-xs uppercase tracking-wider flex items-center justify-center gap-2 hover:brightness-110 transition-all shadow-xl"
@@ -246,23 +277,51 @@ export const GoldReserveStory: React.FC<GoldReserveStoryProps> = ({
             </button>
           </div>
 
-          {/* Synchronized AI Voice-Over Player Bar */}
-          <div className="institutional-panel p-4 rounded-2xl border border-amber-500/20 max-w-3xl mx-auto flex flex-col sm:flex-row items-center gap-4 text-left">
-            <button
-              onClick={toggleNarrator}
-              className="p-3 rounded-xl bg-amber-400 text-black hover:bg-amber-300 transition-colors shrink-0 shadow-md flex items-center gap-2 font-bold text-xs uppercase font-mono"
-            >
-              {isPlayingAudio ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
-              <span>{isPlayingAudio ? 'Pause Voice-Over' : 'Listen Voice-Over'}</span>
-            </button>
+          {/* Studio-Grade AI Voice-Over Player Bar */}
+          <div className="institutional-panel p-5 rounded-2xl border border-amber-500/30 max-w-3xl mx-auto shadow-2xl backdrop-blur-xl">
+            <div className="flex flex-col sm:flex-row items-center gap-4 text-left mb-3">
+              <button
+                onClick={toggleAudio}
+                className="p-3.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 text-black hover:brightness-110 transition-all shrink-0 shadow-lg flex items-center gap-2 font-bold text-xs uppercase font-mono"
+              >
+                {isPlayingAudio ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                <span>{isPlayingAudio ? 'Pause Studio Voice' : 'Play Studio Voice-Over'}</span>
+              </button>
 
-            <div className="flex-1 text-xs font-mono text-zinc-300 overflow-hidden">
-              <span className="text-[10px] text-amber-400 uppercase tracking-widest block mb-0.5">
-                AI Institutional Audio Narrator (60s)
-              </span>
-              <p className="text-zinc-200 text-xs italic truncate">
-                "{scriptLines[activeVoiceStep]}"
-              </p>
+              <div className="flex-1 text-xs font-mono text-zinc-300 overflow-hidden w-full">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="text-[10px] text-amber-400 uppercase tracking-widest font-bold flex items-center gap-1.5">
+                    <Radio className="w-3 h-3 text-rose-500 animate-pulse" />
+                    Neural Studio Broadcast Track (HD Audio)
+                  </span>
+                  <span className="text-[10px] text-zinc-400">
+                    {Math.floor(currentTime)}s / {Math.floor(duration)}s
+                  </span>
+                </div>
+                <p className="text-zinc-100 text-xs italic font-sans font-medium line-clamp-1">
+                  "{scriptLines[activeVoiceStep]?.text}"
+                </p>
+              </div>
+
+              <button
+                onClick={() => setIsMuted(!isMuted)}
+                className="p-2 rounded-lg bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 transition-colors"
+                title={isMuted ? 'Unmute' : 'Mute'}
+              >
+                {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-amber-400" />}
+              </button>
+            </div>
+
+            {/* Audio Scrubber */}
+            <div className="w-full">
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value={audioProgress}
+                onChange={handleSeek}
+                className="w-full h-1 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-amber-400"
+              />
             </div>
           </div>
         </div>
