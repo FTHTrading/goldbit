@@ -11,58 +11,98 @@
   }
 }
 
-/* Surreal Salvador Dali Liquid Metal & Molten Mercury Effects */
+/* Surreal Liquid Glass, Frosty 3D Gold & Molten Mercury Effects */
 .liquid-metal-text {
   background: linear-gradient(135deg, #FFFFFF 0%, #E2E8F0 25%, #94A3B8 50%, #FFFFFF 75%, #64748B 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.15));
 }
 
 .liquid-gold-text {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF08A 25%, #EAB308 50%, #CA8A04 75%, #FDE047 100%);
+  background: linear-gradient(135deg, #FFFDF0 0%, #FEF08A 20%, #F59E0B 45%, #D97706 70%, #FDE047 90%, #FFFFFF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 15px rgba(234, 179, 8, 0.25));
 }
 
 .crimson-text-gradient {
   background: linear-gradient(135deg, #FDA4AF 0%, #F43F5E 50%, #BE123C 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 4px 12px rgba(225, 29, 72, 0.3));
 }
 
-.institutional-panel {
-  background: rgba(12, 12, 16, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Frosty 3D Glassmorphism Panels */
+.frosty-glass-panel {
+  background: radial-gradient(120% 120% at 50% 0%, rgba(26, 26, 36, 0.65) 0%, rgba(10, 10, 14, 0.85) 100%);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.8),
+              inset 0 1px 1px 0 rgba(255, 255, 255, 0.2),
+              inset 0 -1px 1px 0 rgba(0, 0, 0, 0.4);
 }
 
-.institutional-panel:hover {
-  border-color: rgba(225, 29, 72, 0.35);
-  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 25px rgba(225, 29, 72, 0.1);
+.frosty-glass-panel:hover {
+  border-color: rgba(234, 179, 8, 0.4);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.9),
+              0 0 35px rgba(234, 179, 8, 0.15),
+              inset 0 1px 2px 0 rgba(255, 255, 255, 0.35);
 }
 
-.crimson-glow {
-  box-shadow: 0 0 30px rgba(225, 29, 72, 0.25);
+.frosty-glass-gold {
+  background: radial-gradient(100% 100% at 50% 0%, rgba(40, 32, 16, 0.75) 0%, rgba(14, 12, 8, 0.9) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85),
+              0 0 30px rgba(234, 179, 8, 0.12),
+              inset 0 1px 2px 0 rgba(254, 240, 138, 0.35);
 }
 
-.liquid-chrome-border {
-  border: 1px solid transparent;
-  background: linear-gradient(#070709, #070709) padding-box,
-              linear-gradient(135deg, rgba(255, 255, 255, 0.4), rgba(225, 29, 72, 0.3), rgba(255, 215, 0, 0.3), rgba(255, 255, 255, 0.2)) border-box;
+.frosty-glass-crimson {
+  background: radial-gradient(100% 100% at 50% 0%, rgba(40, 12, 20, 0.75) 0%, rgba(14, 8, 10, 0.9) 100%);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(225, 29, 72, 0.35);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.85),
+              0 0 30px rgba(225, 29, 72, 0.15),
+              inset 0 1px 2px 0 rgba(253, 164, 175, 0.35);
 }
 
-/* Custom Fluid Shimmer */
-@keyframes fluidMercury {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Electric Animated Pulse & Light Sweeps */
+@keyframes electricSweep {
+  0% { transform: translateX(-100%); opacity: 0; }
+  50% { opacity: 0.6; }
+  100% { transform: translateX(200%); opacity: 0; }
 }
 
-.fluid-mercury-bg {
-  background: linear-gradient(270deg, #070709, #13131A, #0A0A0E, #181824);
-  background-size: 400% 400%;
-  animation: fluidMercury 15s ease infinite;
+.electric-sweep {
+  position: relative;
+  overflow: hidden;
+}
+
+.electric-sweep::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), rgba(234, 179, 8, 0.35), transparent);
+  transform: skewX(-25deg);
+  animation: electricSweep 4s ease-in-out infinite;
+}
+
+/* 3D Floating & Tilt */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
 }
 
 /* Scrollbar */
@@ -76,10 +116,10 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1E1E28;
+  background: #272738;
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #E11D48;
+  background: #EAB308;
 }

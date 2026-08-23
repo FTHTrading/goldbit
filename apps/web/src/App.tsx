@@ -16,14 +16,16 @@ import { RailSection } from './components/RailSection';
 import { BrandShowcase } from './components/BrandShowcase';
 import { NetworkStatus } from './components/NetworkStatus';
 import { AccessModal } from './components/AccessModal';
+import { ElectricWalkthroughModal } from './components/ElectricWalkthroughModal';
 import { Footer } from './components/Footer';
 import { GoldReserveStory } from './pages/GoldReserveStory';
-import { Layers, Sparkles } from 'lucide-react';
+import { Layers, Sparkles, Zap } from 'lucide-react';
 
 export function App() {
   // Navigation & View State
   const [currentView, setCurrentView] = useState<'platform' | 'gold-reserve'>('platform');
   const [accessModalOpen, setAccessModalOpen] = useState(false);
+  const [walkthroughOpen, setWalkthroughOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('infrastructure');
 
   // Checkout & Modal States
@@ -108,10 +110,11 @@ export function App() {
           />
 
           <main>
-            {/* Salvador Dali Liquid-Metal Hero */}
+            {/* Salvador Dali Liquid-Metal Hero with Studio Voiceover & Guided Tour Trigger */}
             <HeroSection
               onEnterNetwork={() => scrollToSection('terminal')}
               onViewInfrastructure={() => scrollToSection('infrastructure')}
+              onStartWalkthrough={() => setWalkthroughOpen(true)}
             />
 
             {/* 4 Systems Editorial Architecture Grid */}
@@ -125,7 +128,7 @@ export function App() {
               }}
             />
 
-            {/* SECTION: Live Interactive Gold Quoter Terminal */}
+            {/* SECTION: Live Interactive Gold by Weight & Treasuries Ingestion Terminal */}
             <section id="terminal" className="scroll-mt-24">
               <GoldQuoter
                 onProceedToCheckout={handleProceedToCheckout}
@@ -151,7 +154,7 @@ export function App() {
               <PorLiveDashboard />
             </section>
 
-            {/* SECTION: High-Energy Eccentric Video Reels Grid */}
+            {/* SECTION: High-Energy Video Reels Grid */}
             <section>
               <VideoReelsGrid />
             </section>
@@ -193,6 +196,17 @@ export function App() {
             <OrderSuccessModal
               orderResult={completedOrder}
               onClose={() => setSuccessModalOpen(false)}
+            />
+          )}
+
+          {/* Electric Automated Walkthrough Modal */}
+          {walkthroughOpen && (
+            <ElectricWalkthroughModal
+              onClose={() => setWalkthroughOpen(false)}
+              onOpenAccess={() => {
+                setWalkthroughOpen(false);
+                setAccessModalOpen(true);
+              }}
             />
           )}
         </>
