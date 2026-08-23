@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Shield, Activity, Terminal, ArrowUpRight, Menu, X, Lock } from 'lucide-react';
+import { Shield, Activity, Terminal, ArrowUpRight, Menu, X, Lock, Radio } from 'lucide-react';
 
 interface NavbarProps {
   onOpenAccess: () => void;
@@ -10,7 +10,8 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
-    { label: 'Infrastructure', href: '#infrastructure' },
+    { label: 'Terminal', href: '#terminal' },
+    { label: 'Audio Doc', href: '#audio-doc' },
     { label: 'Vaults', href: '#vaults' },
     { label: 'Reserve', href: '#reserve' },
     { label: 'Verify', href: '#verify' },
@@ -46,7 +47,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenAccess, activeSection }) =
           </a>
 
           {/* Center Quiet Navigation */}
-          <div className="hidden md:flex items-center gap-7 text-xs font-medium tracking-wider text-zinc-400 uppercase">
+          <div className="hidden md:flex items-center gap-6 text-xs font-medium tracking-wider text-zinc-400 uppercase">
             {navLinks.map((item) => (
               <a
                 key={item.label}

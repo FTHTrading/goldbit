@@ -14,6 +14,7 @@ import { VaultSection } from './components/VaultSection';
 import { VerifyConsole } from './components/VerifyConsole';
 import { RailSection } from './components/RailSection';
 import { BrandShowcase } from './components/BrandShowcase';
+import { WyomingConvergenceAudio } from './components/WyomingConvergenceAudio';
 import { NetworkStatus } from './components/NetworkStatus';
 import { AccessModal } from './components/AccessModal';
 import { ElectricWalkthroughModal } from './components/ElectricWalkthroughModal';
@@ -135,6 +136,12 @@ export function App() {
                 userXrplAddress={userXrplAddress}
               />
             </section>
+
+            {/* SECTION: The Wyoming Convergence Audio Deep-Dive Studio */}
+            <WyomingConvergenceAudio
+              onOpenTerminal={() => scrollToSection('terminal')}
+              onOpenCinematic={() => setCurrentView('gold-reserve')}
+            />
 
             {/* SECTION: 3D Holographic CER Deed Certificate Viewer */}
             <section>
