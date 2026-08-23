@@ -1,0 +1,28 @@
+{
+  "name": "goldbit-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GoldBit by Unykorn - Micro-Gold Allocation & XRPL Rails (LBMA 99.99% Fine Physical Gold)",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev:backend": "npm run dev --workspace=apps/backend",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspace=apps/backend",
+    "deploy:pages": "wrangler pages deploy apps/web/dist --project-name=goldbit-unykorn-ai"
+  },
+  "keywords": [
+    "goldbit",
+    "unykorn",
+    "xrpl",
+    "rwa",
+    "gold",
+    "bitgo",
+    "lbma",
+    "fintech"
+  ],
+  "author": "UnyKorn LLC",
+  "license": "UNLICENSED"
+}

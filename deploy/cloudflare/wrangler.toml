@@ -1,0 +1,15 @@
+name = "goldbit-unykorn-ai"
+compatibility_date = "2026-08-23"
+
+# Cloudflare Pages static & SSR configuration
+pages_build_output_dir = "apps/web/dist"
+
+[vars]
+ENVIRONMENT = "production"
+SITE_NAME = "GoldBit by Unykorn"
+XRPL_NETWORK = "mainnet"
+
+# Cloudflare R2 Proof-of-Reserve Attestation Bucket Binding
+[[r2_buckets]]
+binding = "POR_BUCKET"
+bucket_name = "unykorn-proof-of-reserves"
